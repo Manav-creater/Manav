@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MANAV - Login</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
+
+body{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow:hidden;
+    background:
+        radial-gradient(circle at 15% 20%, #24477f 0%, transparent 30%),
+        radial-gradient(circle at 85% 80%, #321b68 0%, transparent 30%),
+        linear-gradient(135deg,#0a1425,#142237,#101827);
+}
+
+/* BACKGROUND BALLS */
+
+.ball{
+    position:absolute;
+    border-radius:50%;
+    background:linear-gradient(135deg,#4d8cff,#8b5cf6);
+    filter:blur(1px);
+    opacity:.35;
+    box-shadow:
+        0 0 25px #4d8cff,
+        0 0 60px #6d5dfc;
+    animation:float 8s infinite ease-in-out;
+}
+
+.ball:nth-child(1){
+    width:90px;
+    height:90px;
+    left:8%;
+    top:18%;
+    animation-delay:0s;
+}
+
+.ball:nth-child(2){
+    width:35px;
+    height:35px;
+    left:22%;
+    bottom:12%;
+    animation-delay:2s;
+}
+
+.ball:nth-child(3){
+    width:65px;
+    height:65px;
+    right:10%;
+    top:17%;
+    animation-delay:1s;
+}
+
+.ball:nth-child(4){
+    width:25px;
+    height:25px;
+    right:25%;
+    bottom:20%;
+    animation-delay:3s;
+}
+
+.ball:nth-child(5){
+    width:45px;
+    height:45px;
+    left:40%;
+    top:5%;
+    animation-delay:4s;
+}
+
+.ball:nth-child(6){
+    width:18px;
+    height:18px;
+    right:30%;
+    top:42%;
+    animation-delay:1.5s;
+}
+
+@keyframes float{
+    0%,100%{
+        transform:translateY(0) translateX(0) scale(1);
+    }
+
+    50%{
+        transform:translateY(-35px) translateX(20px) scale(1.15);
+    }
+}
+
+/* LOGIN CARD */
+
+.login-card{
+    position:relative;
+    z-index:5;
+    width:420px;
+    padding:42px;
+    border-radius:24px;
+
+    background:rgba(25,39,58,.72);
+    backdrop-filter:blur(22px);
+    -webkit-backdrop-filter:blur(22px);
+
+    border:1px solid rgba(255,255,255,.12);
+
+    box-shadow:
+        0 30px 80px rgba(0,0,0,.45),
+        inset 0 1px 0 rgba(255,255,255,.08);
+}
+
+/* LOGO */
+
+.logo{
+    width:65px;
+    height:65px;
+    margin:auto;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    border-radius:18px;
+
+    background:linear-gradient(135deg,#3b82f6,#8b5cf6);
+
+    box-shadow:
+        0 10px 30px rgba(75,110,255,.45),
+        0 0 25px rgba(139,92,246,.3);
+}
+
+.logo span{
+    color:white;
+    font-size:30px;
+    font-weight:bold;
+}
+
+/* TITLE */
+
+h1{
+    text-align:center;
+    color:white;
+    font-size:30px;
+    margin-top:20px;
+}
+
+.subtitle{
+    text-align:center;
+    color:#94a3b8;
+    margin-top:8px;
+    margin-bottom:30px;
+    font-size:14px;
+}
+
+/* LABEL */
+
+label{
+    display:block;
+    color:#dbe4f0;
+    font-size:14px;
+    font-weight:bold;
+    margin-bottom:9px;
+}
+
+/* INPUT */
+
+.input-box{
+    position:relative;
+    margin-bottom:22px;
+}
+
+.input-box input{
+    width:100%;
+    height:52px;
+    padding:0 48px 0 45px;
+
+    color:white;
+    font-size:14px;
+
+    background:rgba(8,20,36,.65);
+    border:1px solid #33445d;
+    border-radius:12px;
+    outline:none;
+
+    transition:.3s;
+}
+
+.input-box input:focus{
+    border-color:#647cff;
+    box-shadow:
+        0 0 0 3px rgba(99,102,241,.12),
+        0 0 20px rgba(99,102,241,.08);
+}
+
+.input-icon{
+    position:absolute;
+    left:16px;
+    top:16px;
+    color:#94a3b8;
+}
+
+.eye{
+    position:absolute;
+    right:16px;
+    top:16px;
+    color:#94a3b8;
+    cursor:pointer;
+}
+
+/* OPTIONS */
+
+.options{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:25px;
+    font-size:13px;
+}
+
+.remember{
+    color:#94a3b8;
+}
+
+.remember input{
+    accent-color:#6366f1;
+    margin-right:5px;
+}
+
+.forgot{
+    color:#4d91ff;
+    cursor:pointer;
+}
+
+/* BUTTON */
+
+.login-btn{
+    width:100%;
+    height:52px;
+    border:none;
+    border-radius:12px;
+
+    background:linear-gradient(90deg,#3b82f6,#6366f1,#8b5cf6);
+
+    color:white;
+    font-size:15px;
+    font-weight:bold;
+
+    cursor:pointer;
+
+    box-shadow:
+        0 10px 25px rgba(79,70,229,.3);
+
+    transition:.3s;
+}
+
+.login-btn:hover{
+    transform:translateY(-2px);
+    box-shadow:
+        0 15px 35px rgba(99,102,241,.45);
+}
+
+/* DIVIDER */
+
+.divider{
+    display:flex;
+    align-items:center;
+    gap:15px;
+    margin:27px 0;
+    color:#64748b;
+    font-size:12px;
+}
+
+.divider::before,
+.divider::after{
+    content:"";
+    height:1px;
+    flex:1;
+    background:#334155;
+}
+
+/* SOCIAL */
+
+.social{
+    display:flex;
+    gap:12px;
+}
+
+.social button{
+    flex:1;
+    height:48px;
+    border-radius:11px;
+    border:1px solid #33445d;
+    background:rgba(8,20,36,.6);
+    color:#e2e8f0;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.social button:hover{
+    background:#1d2c42;
+    border-color:#52647e;
+    transform:translateY(-2px);
+}
+
+/* SIGN UP */
+
+.signup{
+    text-align:center;
+    color:#64748b;
+    font-size:13px;
+    margin-top:25px;
+}
+
+.signup span{
+    color:#5b8cff;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+/* MOBILE */
+
+@media(max-width:500px){
+
+    .login-card{
+        width:92%;
+        padding:30px 25px;
+    }
+
+    h1{
+        font-size:26px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- Animated Balls -->
+<div class="ball"></div>
+<div class="ball"></div>
+<div class="ball"></div>
+<div class="ball"></div>
+<div class="ball"></div>
+<div class="ball"></div>
+
+<div class="login-card">
+
+    <div class="logo">
+        <span>M</span>
+    </div>
+
+    <h1>Welcome Back</h1>
+
+    <p class="subtitle">
+        Sign in to your MANAV account to continue
+    </p>
+
+    <form>
+
+        <label>Email Address</label>
+
+        <div class="input-box">
+            <span class="input-icon">✉</span>
+            <input type="email" placeholder="Enter your email">
+        </div>
+
+        <label>Password</label>
+
+        <div class="input-box">
+            <span class="input-icon">🔒</span>
+
+            <input
+                type="password"
+                id="password"
+                placeholder="Enter your password"
+            >
+
+            <span class="eye" onclick="showPassword()">◉</span>
+        </div>
+
+        <div class="options">
+
+            <label class="remember">
+                <input type="checkbox">
+                Remember me
+            </label>
+
+            <span class="forgot">
+                Forgot Password?
+            </span>
+
+        </div>
+
+        <button class="login-btn">
+            Sign In
+        </button>
+
+    </form>
+
+    <div class="divider">
+        Or continue with
+    </div>
+
+    <div class="social">
+        <button>G&nbsp;&nbsp; Google</button>
+        <button>◉&nbsp;&nbsp; GitHub</button>
+    </div>
+
+    <div class="signup">
+        Don't have an account?
+        <span>Create Account</span>
+    </div>
+
+</div>
+
+<script>
+function showPassword(){
+
+    let password = document.getElementById("password");
+
+    if(password.type === "password"){
+        password.type = "text";
+    }else{
+        password.type = "password";
+    }
+
+}
+</script>
+
+</body>
+</html>

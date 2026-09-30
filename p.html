@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Services Section</title>
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Poppins", sans-serif;
+            background: #020d1c;
+            color: white;
+        }
+
+        /* =========================
+           SERVICES SECTION
+        ========================== */
+
+        .services {
+            min-height: 100vh;
+            padding: 35px 7%;
+            position: relative;
+            overflow: hidden;
+
+            background:
+                radial-gradient(circle at 20% 10%, rgba(37, 99, 235, .15), transparent 25%),
+                #020d1c;
+        }
+
+
+        /* =========================
+           BACKGROUND CIRCLE
+        ========================== */
+
+        .circle {
+            position: absolute;
+            width: 130px;
+            height: 130px;
+
+            border-radius: 50%;
+
+            background: linear-gradient(
+                135deg,
+                #3219c7,
+                #006eff
+            );
+
+            top: -50px;
+            left: -40px;
+
+            opacity: .8;
+            filter: blur(.3px);
+        }
+
+
+        /* =========================
+           DOTS
+        ========================== */
+
+        .dots {
+            position: absolute;
+            right: 60px;
+            top: 50px;
+
+            width: 70px;
+            height: 70px;
+
+            background-image: radial-gradient(
+                #0077ff 1.5px,
+                transparent 1.5px
+            );
+
+            background-size: 10px 10px;
+
+            opacity: .35;
+        }
+
+
+        /* =========================
+           HEADER
+        ========================== */
+
+        .heading {
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .small-title {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 4px;
+
+            color: #e5e7eb;
+
+            margin-bottom: 4px;
+        }
+
+        .heading h1 {
+            font-size: 27px;
+            line-height: 1.2;
+            font-weight: 700;
+        }
+
+        .heading h1 span {
+            color: #168cff;
+        }
+
+        .description {
+            max-width: 500px;
+            margin: 7px auto 0;
+
+            color: #aeb9c8;
+            font-size: 9px;
+            line-height: 1.5;
+        }
+
+
+        /* =========================
+           SMALL LINE
+        ========================== */
+
+        .line {
+            width: 50px;
+            height: 3px;
+
+            margin: 7px auto 16px;
+
+            border-radius: 10px;
+
+            background: linear-gradient(
+                90deg,
+                #00c6ff,
+                #7c3aed
+            );
+        }
+
+
+        /* =========================
+           ARROW BUTTON
+        ========================== */
+
+        .arrow {
+            position: absolute;
+
+            right: 30px;
+            top: 8px;
+
+            width: 50px;
+            height: 50px;
+
+            border-radius: 50%;
+
+            background: #bfc2c7;
+            color: #101010;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            font-size: 25px;
+
+            box-shadow: 0 0 15px rgba(255,255,255,.12);
+
+            transition: .3s;
+        }
+
+        .arrow:hover {
+            transform: translateY(5px);
+            background: white;
+        }
+
+
+        /* =========================
+           SERVICES GRID
+        ========================== */
+
+        .services-container {
+            max-width: 1000px;
+            margin: auto;
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 10px 15px;
+
+            position: relative;
+            z-index: 2;
+        }
+
+
+        /* =========================
+           SERVICE CARD
+        ========================== */
+
+        .service-card {
+            min-height: 125px;
+
+            padding: 10px 15px;
+
+            border: 1px solid #17304d;
+
+            border-radius: 6px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(12, 28, 48, .95),
+                    rgba(4, 17, 32, .95)
+                );
+
+            position: relative;
+
+            overflow: hidden;
+
+            transition:
+                transform .3s ease,
+                border .3s ease,
+                box-shadow .3s ease;
+        }
+
+
+        /* Decorative shape inside card */
+
+        .service-card::after {
+            content: "";
+
+            position: absolute;
+
+            width: 100px;
+            height: 100px;
+
+            right: -35px;
+            bottom: -45px;
+
+            border-radius: 50%;
+
+            background: #3124aa;
+
+            opacity: .35;
+
+            filter: blur(5px);
+        }
+
+
+        /* Hover */
+
+        .service-card:hover {
+            transform: translateY(-5px);
+
+            border-color: #008cff;
+
+            box-shadow:
+                0 0 8px #008cff,
+                0 0 25px rgba(0,140,255,.35);
+        }
+
+
+        /* First card */
+
+        .service-card:first-child {
+            border-color: #008cff;
+
+            box-shadow:
+                0 0 7px #008cff,
+                0 0 20px rgba(0,140,255,.3);
+        }
+
+
+        /* =========================
+           ICON
+        ========================== */
+
+        .icon {
+            width: 35px;
+            height: 35px;
+
+            border-radius: 50%;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            font-size: 16px;
+
+            margin-bottom: 5px;
+
+            color: white;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #1677ff,
+                    #5224ff
+                );
+        }
+
+        .icon.purple {
+            background:
+                linear-gradient(
+                    135deg,
+                    #9b27ff,
+                    #5215d8
+                );
+        }
+
+        .icon.green {
+            background:
+                linear-gradient(
+                    135deg,
+                    #00d5a0,
+                    #008eab
+                );
+        }
+
+        .icon.orange {
+            background:
+                linear-gradient(
+                    135deg,
+                    #ff8a00,
+                    #d64b00
+                );
+        }
+
+        .icon.pink {
+            background:
+                linear-gradient(
+                    135deg,
+                    #ff24c8,
+                    #7d1ad7
+                );
+        }
+
+
+        /* =========================
+           CARD TEXT
+        ========================== */
+
+        .service-card h2 {
+            font-size: 11px;
+            margin-bottom: 3px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .service-card p {
+            font-size: 8px;
+            line-height: 1.4;
+
+            color: #aeb9c8;
+
+            max-width: 220px;
+
+            position: relative;
+            z-index: 2;
+        }
+
+
+        /* =========================
+           LEARN MORE
+        ========================== */
+
+        .learn {
+            display: inline-block;
+
+            margin-top: 7px;
+
+            color: #1595ff;
+
+            font-size: 7px;
+            font-weight: 600;
+
+            text-decoration: none;
+
+            position: relative;
+            z-index: 3;
+
+            transition: .3s;
+        }
+
+        .learn:hover {
+            color: white;
+            letter-spacing: .5px;
+        }
+
+
+        /* =========================
+           RESPONSIVE
+        ========================== */
+
+        @media(max-width: 750px) {
+
+            .services-container {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .arrow {
+                right: 15px;
+            }
+        }
+
+
+        @media(max-width: 500px) {
+
+            .services {
+                padding: 30px 20px;
+            }
+
+            .services-container {
+                grid-template-columns: 1fr;
+            }
+
+            .heading h1 {
+                font-size: 25px;
+            }
+
+            .arrow {
+                display: none;
+            }
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+<section class="services">
+
+    <!-- Background decorations -->
+    <div class="circle"></div>
+    <div class="dots"></div>
+
+
+    <!-- Heading -->
+    <div class="heading">
+
+        <div class="small-title">
+            WHAT I OFFER
+        </div>
+
+        <h1>
+            Our <span>Services</span>
+        </h1>
+
+        <p class="description">
+            I provide modern, responsive and high-quality web solutions
+            to help bring your ideas to life. Here are the services I offer:
+        </p>
+
+        <div class="line"></div>
+
+        <div class="arrow">
+            ↓
+        </div>
+
+    </div>
+
+
+    <!-- Services -->
+    <div class="services-container">
+
+
+        <!-- 1 -->
+        <div class="service-card">
+
+            <div class="icon">
+                <i class="fa-solid fa-code"></i>
+            </div>
+
+            <h2>Web Development</h2>
+
+            <p>
+                Custom, responsive and fast websites built with modern
+                technologies like HTML, CSS, JavaScript and more.
+            </p>
+
+            <a href="#" class="learn">
+                Learn More →
+            </a>
+
+        </div>
+
+
+        <!-- 2 -->
+        <div class="service-card">
+
+            <div class="icon purple">
+                <i class="fa-solid fa-pen"></i>
+            </div>
+
+            <h2>UI/UX Design</h2>
+
+            <p>
+                Clean, modern and user-friendly designs that create great
+                experiences and make your brand stand out.
+            </p>
+
+            <a href="#" class="learn">
+                Learn More →
+            </a>
+
+        </div>
+
+
+        <!-- 3 -->
+        <div class="service-card">
+
+            <div class="icon green">
+                <i class="fa-solid fa-desktop"></i>
+            </div>
+
+            <h2>Website Redesign</h2>
+
+            <p>
+                Give your old website a fresh, modern look with better
+                performance, responsiveness and user experience.
+            </p>
+
+            <a href="#" class="learn">
+                Learn More →
+            </a>
+
+        </div>
+
+
+        <!-- 4 -->
+        <div class="service-card">
+
+            <div class="icon orange">
+                <i class="fa-solid fa-database"></i>
+            </div>
+
+            <h2>Database Integration</h2>
+
+            <p>
+                Connect your website with powerful databases and manage
+                your data efficiently.
+            </p>
+
+            <a href="#" class="learn">
+                Learn More →
+            </a>
+
+        </div>
+
+
+        <!-- 5 -->
+        <div class="service-card">
+
+            <div class="icon pink">
+                <i class="fa-solid fa-cart-shopping"></i>
+            </div>
+
+            <h2>E-Commerce Solutions</h2>
+
+            <p>
+                Modern online stores with product management, shopping
+                carts and smooth user experiences.
+            </p>
+
+            <a href="#" class="learn">
+                Learn More →
+            </a>
+
+        </div>
+
+
+        <!-- 6 -->
+        <div class="service-card">
+
+            <div class="icon">
+                <i class="fa-solid fa-gear"></i>
+            </div>
+
+            <h2>Website Maintenance</h2>
+
+            <p>
+                Keep your website updated, secure, fast and running
+                smoothly.
+            </p>
+
+            <a href="#" class="learn">
+                Learn More →
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+</body>
+</html>

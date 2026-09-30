@@ -1,0 +1,1361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GK Master - General Knowledge Quiz</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    min-height:100vh;
+    background:linear-gradient(135deg,#050b16,#101a35,#07111f);
+    color:white;
+}
+
+/* ================= LOADER ================= */
+
+#loader{
+    position:fixed;
+    inset:0;
+    z-index:9999;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:
+        radial-gradient(circle at center,#182957 0%,#080d1c 55%,#03050b 100%);
+    transition:opacity .8s ease, visibility .8s ease;
+}
+
+#loader.hide{
+    opacity:0;
+    visibility:hidden;
+}
+
+.loader-box{
+    text-align:center;
+}
+
+.loader-logo{
+    font-size:52px;
+    font-weight:900;
+    letter-spacing:2px;
+    margin-bottom:25px;
+    animation:logoGlow 1.5s infinite alternate;
+}
+
+.loader-logo span{
+    color:#ffd43b;
+}
+
+.brain{
+    font-size:55px;
+    display:block;
+    margin-bottom:12px;
+    animation:brainMove 1.2s infinite;
+}
+
+.loader-ring{
+    width:75px;
+    height:75px;
+    border:6px solid rgba(255,255,255,.12);
+    border-top:6px solid #ffd43b;
+    border-right:6px solid #6c63ff;
+    border-radius:50%;
+    margin:auto;
+    animation:spin 1s linear infinite;
+}
+
+.loading-text{
+    margin-top:20px;
+    color:#aeb9ce;
+    letter-spacing:3px;
+    font-size:13px;
+}
+
+.loading-dots::after{
+    content:"";
+    animation:dots 1.5s infinite;
+}
+
+@keyframes spin{
+    to{
+        transform:rotate(360deg);
+    }
+}
+
+@keyframes brainMove{
+    0%,100%{
+        transform:scale(1) rotate(-3deg);
+    }
+    50%{
+        transform:scale(1.12) rotate(3deg);
+    }
+}
+
+@keyframes logoGlow{
+    from{
+        text-shadow:0 0 5px rgba(255,212,59,.1);
+    }
+    to{
+        text-shadow:0 0 30px rgba(255,212,59,.5);
+    }
+}
+
+@keyframes dots{
+    0%{content:"";}
+    25%{content:".";}
+    50%{content:"..";}
+    75%{content:"...";}
+    100%{content:"";}
+}
+
+
+/* ================= MAIN ================= */
+
+.container{
+    width:100%;
+    max-width:900px;
+    margin:auto;
+    padding:25px 20px;
+}
+
+.screen{
+    display:none;
+}
+
+.screen.active{
+    display:block;
+}
+
+.card{
+    background:rgba(255,255,255,.07);
+    border:1px solid rgba(255,255,255,.14);
+    backdrop-filter:blur(15px);
+    border-radius:25px;
+    padding:30px;
+    box-shadow:0 20px 70px rgba(0,0,0,.45);
+}
+
+/* ================= HOME ================= */
+
+.logo{
+    text-align:center;
+    font-size:48px;
+    font-weight:900;
+    letter-spacing:1px;
+    margin-bottom:8px;
+}
+
+.logo span{
+    color:#ffd43b;
+}
+
+.subtitle{
+    text-align:center;
+    color:#aeb9ce;
+    margin-bottom:30px;
+}
+
+.money-banner{
+    background:linear-gradient(135deg,#4b2d00,#9b6500);
+    border:2px solid #ffd43b;
+    border-radius:18px;
+    padding:20px;
+    text-align:center;
+    margin-bottom:25px;
+}
+
+.money-banner h2{
+    margin-bottom:8px;
+}
+
+.money-banner strong{
+    font-size:34px;
+    color:#ffe477;
+}
+
+.money-banner p{
+    margin-top:8px;
+    color:#ffe9a3;
+}
+
+.difficulty{
+    display:flex;
+    gap:12px;
+    margin:20px 0;
+}
+
+.diff{
+    flex:1;
+    padding:14px;
+    border:0;
+    border-radius:12px;
+    background:#18243d;
+    color:white;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.diff.active{
+    background:linear-gradient(135deg,#6259ff,#8b5cf6);
+}
+
+.start-btn,
+.next-btn,
+.home-btn{
+    width:100%;
+    border:0;
+    padding:16px;
+    border-radius:14px;
+    cursor:pointer;
+    font-size:17px;
+    font-weight:bold;
+    color:white;
+    background:linear-gradient(135deg,#6259ff,#8b5cf6);
+    margin-top:15px;
+    transition:.25s;
+}
+
+.start-btn:hover,
+.next-btn:hover,
+.home-btn:hover{
+    transform:translateY(-3px);
+    box-shadow:0 10px 25px rgba(108,99,255,.3);
+}
+
+.home-btn{
+    background:#27344f;
+}
+
+.note{
+    text-align:center;
+    color:#78859d;
+    font-size:13px;
+    margin-top:15px;
+}
+
+
+/* ================= GAME ================= */
+
+.game-top{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:12px;
+    margin-bottom:20px;
+}
+
+.stat{
+    background:rgba(255,255,255,.06);
+    padding:14px;
+    border-radius:14px;
+    text-align:center;
+}
+
+.stat small{
+    display:block;
+    color:#9caac1;
+    margin-bottom:5px;
+}
+
+.stat b{
+    font-size:18px;
+}
+
+.money-stat{
+    color:#ffd43b;
+}
+
+.progress-box{
+    height:10px;
+    background:#202c43;
+    border-radius:20px;
+    overflow:hidden;
+    margin-bottom:25px;
+}
+
+.progress{
+    height:100%;
+    width:0;
+    background:linear-gradient(90deg,#6c63ff,#ffd43b);
+    transition:.4s;
+}
+
+.question-info{
+    display:flex;
+    justify-content:space-between;
+    color:#9eabc0;
+    margin-bottom:12px;
+}
+
+.prize{
+    display:inline-block;
+    background:rgba(255,212,59,.1);
+    color:#ffd43b;
+    border:1px solid rgba(255,212,59,.3);
+    padding:9px 15px;
+    border-radius:20px;
+    margin-bottom:18px;
+    font-weight:bold;
+}
+
+.question{
+    font-size:27px;
+    line-height:1.4;
+    margin-bottom:25px;
+}
+
+.answers{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:14px;
+}
+
+.answer{
+    padding:18px;
+    border:2px solid rgba(255,255,255,.08);
+    background:#17233d;
+    color:white;
+    border-radius:14px;
+    cursor:pointer;
+    text-align:left;
+    font-size:16px;
+    transition:.2s;
+}
+
+.answer:hover{
+    transform:translateY(-2px);
+    border-color:#6c63ff;
+}
+
+.answer.correct{
+    background:#126b42;
+    border-color:#39d98a;
+}
+
+.answer.wrong{
+    background:#702b35;
+    border-color:#ff5d73;
+}
+
+.answer.disabled{
+    pointer-events:none;
+}
+
+.feedback{
+    min-height:30px;
+    margin-top:20px;
+    font-size:18px;
+    font-weight:bold;
+}
+
+.timer{
+    color:#ffd43b;
+}
+
+
+/* ================= RESULT ================= */
+
+.result-title{
+    text-align:center;
+    font-size:38px;
+    margin-bottom:10px;
+}
+
+.result-sub{
+    text-align:center;
+    color:#b9c3d6;
+    margin-bottom:25px;
+}
+
+.result-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:12px;
+}
+
+.result-stat{
+    background:rgba(255,255,255,.07);
+    padding:18px;
+    border-radius:14px;
+    text-align:center;
+}
+
+.result-stat span{
+    display:block;
+    color:#aeb9ce;
+    margin-bottom:8px;
+}
+
+.cash-win{
+    margin-top:20px;
+    background:linear-gradient(135deg,#5c3900,#a86f00);
+    border:2px solid #ffd43b;
+    border-radius:18px;
+    padding:22px;
+    text-align:center;
+}
+
+.cash-win p{
+    color:#ffe9a3;
+    margin-bottom:8px;
+}
+
+.cash-win strong{
+    font-size:36px;
+    color:white;
+}
+
+
+/* ================= MOBILE ================= */
+
+@media(max-width:650px){
+
+    .loader-logo{
+        font-size:38px;
+    }
+
+    .logo{
+        font-size:35px;
+    }
+
+    .card{
+        padding:20px;
+    }
+
+    .game-top{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .answers{
+        grid-template-columns:1fr;
+    }
+
+    .question{
+        font-size:22px;
+    }
+
+    .result-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .difficulty{
+        flex-direction:column;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ================= GAME LOADER ================= -->
+
+<div id="loader">
+
+    <div class="loader-box">
+
+        <span class="brain">🧠</span>
+
+        <div class="loader-logo">
+            GK <span>MASTER</span>
+        </div>
+
+        <div class="loader-ring"></div>
+
+        <div class="loading-text">
+            LOADING GAME<span class="loading-dots"></span>
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="container">
+
+<!-- ================= HOME ================= -->
+
+<div class="screen active" id="homeScreen">
+
+<div class="card">
+
+    <div class="logo">
+        🧠 GK <span>MASTER</span>
+    </div>
+
+    <p class="subtitle">
+        General Knowledge Quiz Game
+    </p>
+
+    <div class="money-banner">
+
+        <h2>💰 QUESTION PRIZE</h2>
+
+        <strong>Rs. 500</strong>
+
+        <p>
+            Every correct answer adds Rs. 500 virtual winnings.
+        </p>
+
+    </div>
+
+    <h3>Select Difficulty</h3>
+
+    <div class="difficulty">
+
+        <button class="diff active"
+        onclick="selectDifficulty('easy',this)">
+            Easy
+        </button>
+
+        <button class="diff"
+        onclick="selectDifficulty('normal',this)">
+            Normal
+        </button>
+
+        <button class="diff"
+        onclick="selectDifficulty('hard',this)">
+            Hard
+        </button>
+
+    </div>
+
+    <button class="start-btn" onclick="startGame()">
+        🚀 START GK MASTER
+    </button>
+
+    <p class="note">
+        10 Questions × Rs. 500 = Maximum Rs. 5,000
+    </p>
+
+</div>
+
+</div>
+
+
+<!-- ================= GAME ================= -->
+
+<div class="screen" id="gameScreen">
+
+<div class="card">
+
+    <div class="game-top">
+
+        <div class="stat">
+            <small>Question</small>
+            <b id="questionNumber">1 / 10</b>
+        </div>
+
+        <div class="stat">
+            <small>❤️ Lives</small>
+            <b id="lives">3</b>
+        </div>
+
+        <div class="stat">
+            <small>⏱️ Time</small>
+            <b class="timer" id="timer">15</b>
+        </div>
+
+        <div class="stat money-stat">
+            <small>💰 Winnings</small>
+            <b id="moneyDisplay">Rs. 0</b>
+        </div>
+
+    </div>
+
+    <div class="progress-box">
+        <div class="progress" id="progress"></div>
+    </div>
+
+    <div class="question-info">
+
+        <span id="category">
+            General
+        </span>
+
+        <span id="difficultyText">
+            EASY
+        </span>
+
+    </div>
+
+    <div class="prize">
+        💰 This Question: Rs. 500
+    </div>
+
+    <h2 class="question" id="question">
+        Question
+    </h2>
+
+    <div class="answers" id="answers"></div>
+
+    <div class="feedback" id="feedback"></div>
+
+    <button
+        class="next-btn"
+        id="nextBtn"
+        onclick="nextQuestion()"
+        style="display:none;">
+        NEXT QUESTION →
+    </button>
+
+</div>
+
+</div>
+
+
+<!-- ================= RESULT ================= -->
+
+<div class="screen" id="resultScreen">
+
+<div class="card">
+
+    <h1 class="result-title">
+        🏆 Quiz Complete!
+    </h1>
+
+    <p class="result-sub" id="resultMessage">
+        Well played!
+    </p>
+
+    <div class="result-grid">
+
+        <div class="result-stat">
+            <span>Correct</span>
+            <b id="correctResult">0</b>
+        </div>
+
+        <div class="result-stat">
+            <span>Wrong</span>
+            <b id="wrongResult">0</b>
+        </div>
+
+        <div class="result-stat">
+            <span>Score</span>
+            <b id="scoreResult">0</b>
+        </div>
+
+        <div class="result-stat">
+            <span>Best Streak</span>
+            <b id="streakResult">0</b>
+        </div>
+
+    </div>
+
+    <div class="cash-win">
+
+        <p>
+            💰 TOTAL VIRTUAL WINNINGS
+        </p>
+
+        <strong id="moneyResult">
+            Rs. 0
+        </strong>
+
+    </div>
+
+    <button class="start-btn" onclick="startGame()">
+        🔄 PLAY AGAIN
+    </button>
+
+    <button class="home-btn" onclick="goHome()">
+        🏠 HOME
+    </button>
+
+    <p class="note">
+        Winnings are virtual game points, not real cash.
+    </p>
+
+</div>
+
+</div>
+
+</div>
+
+
+<script>
+
+/* ================= LOADER ================= */
+
+window.addEventListener("load",function(){
+
+    setTimeout(function(){
+
+        document.getElementById("loader")
+        .classList.add("hide");
+
+    },2500);
+
+});
+
+
+/* ================= QUESTIONS ================= */
+
+const questions = [
+
+{
+category:"Geography",
+difficulty:"easy",
+q:"What is the capital of Pakistan?",
+a:["Karachi","Lahore","Islamabad","Peshawar"],
+c:2
+},
+
+{
+category:"Science",
+difficulty:"easy",
+q:"What planet is known as the Red Planet?",
+a:["Earth","Mars","Jupiter","Venus"],
+c:1
+},
+
+{
+category:"Nature",
+difficulty:"easy",
+q:"Which animal is known as the King of the Jungle?",
+a:["Tiger","Lion","Elephant","Bear"],
+c:1
+},
+
+{
+category:"Science",
+difficulty:"easy",
+q:"How many legs does a spider have?",
+a:["6","8","10","12"],
+c:1
+},
+
+{
+category:"Space",
+difficulty:"easy",
+q:"What is the closest star to Earth?",
+a:["Moon","Mars","Sun","Venus"],
+c:2
+},
+
+{
+category:"Geography",
+difficulty:"easy",
+q:"Which is the largest ocean?",
+a:["Atlantic Ocean","Indian Ocean","Pacific Ocean","Arctic Ocean"],
+c:2
+},
+
+{
+category:"Science",
+difficulty:"easy",
+q:"What gas do humans need to breathe?",
+a:["Carbon Dioxide","Oxygen","Hydrogen","Helium"],
+c:1
+},
+
+{
+category:"Sports",
+difficulty:"easy",
+q:"How many players are there in a cricket team?",
+a:["9","10","11","12"],
+c:2
+},
+
+{
+category:"Technology",
+difficulty:"easy",
+q:"What does CPU stand for?",
+a:[
+"Central Processing Unit",
+"Computer Personal Unit",
+"Central Program Utility",
+"Computer Processing User"
+],
+c:0
+},
+
+{
+category:"General",
+difficulty:"easy",
+q:"How many days are there in a week?",
+a:["5","6","7","8"],
+c:2
+},
+
+{
+category:"Pakistan",
+difficulty:"normal",
+q:"Who is known as the founder of Pakistan?",
+a:[
+"Allama Iqbal",
+"Quaid-e-Azam Muhammad Ali Jinnah",
+"Liaquat Ali Khan",
+"Sir Syed Ahmed Khan"
+],
+c:1
+},
+
+{
+category:"History",
+difficulty:"normal",
+q:"In which year did Pakistan become independent?",
+a:["1945","1946","1947","1948"],
+c:2
+},
+
+{
+category:"Science",
+difficulty:"normal",
+q:"What is H2O commonly known as?",
+a:["Oxygen","Hydrogen","Water","Salt"],
+c:2
+},
+
+{
+category:"Space",
+difficulty:"normal",
+q:"How many planets are in our Solar System?",
+a:["7","8","9","10"],
+c:1
+},
+
+{
+category:"Geography",
+difficulty:"normal",
+q:"Which country has the largest population?",
+a:["USA","India","China","Russia"],
+c:1
+},
+
+{
+category:"Sports",
+difficulty:"normal",
+q:"Which sport uses a bat and ball?",
+a:["Football","Cricket","Swimming","Boxing"],
+c:1
+},
+
+{
+category:"Technology",
+difficulty:"normal",
+q:"HTML is mainly used to create what?",
+a:["Web pages","Cars","Food","Buildings"],
+c:0
+},
+
+{
+category:"Science",
+difficulty:"normal",
+q:"What organ pumps blood around the human body?",
+a:["Brain","Liver","Heart","Lung"],
+c:2
+},
+
+{
+category:"General",
+difficulty:"normal",
+q:"How many continents are there?",
+a:["5","6","7","8"],
+c:2
+},
+
+{
+category:"Nature",
+difficulty:"normal",
+q:"Which is the fastest land animal?",
+a:["Lion","Cheetah","Horse","Tiger"],
+c:1
+},
+
+{
+category:"Science",
+difficulty:"hard",
+q:"What is the chemical symbol for gold?",
+a:["Ag","Au","Fe","Go"],
+c:1
+},
+
+{
+category:"Science",
+difficulty:"hard",
+q:"What is the largest organ in the human body?",
+a:["Heart","Brain","Skin","Liver"],
+c:2
+},
+
+{
+category:"Space",
+difficulty:"hard",
+q:"Which planet has the most visible rings?",
+a:["Mars","Saturn","Earth","Mercury"],
+c:1
+},
+
+{
+category:"Technology",
+difficulty:"hard",
+q:"What does RAM stand for?",
+a:[
+"Random Access Memory",
+"Read Access Machine",
+"Rapid Application Memory",
+"Random Application Module"
+],
+c:0
+},
+
+{
+category:"Geography",
+difficulty:"hard",
+q:"Which is the smallest country in the world?",
+a:["Monaco","Vatican City","Maldives","Singapore"],
+c:1
+},
+
+{
+category:"Sports",
+difficulty:"hard",
+q:"How many rings are on the Olympic flag?",
+a:["4","5","6","7"],
+c:1
+},
+
+{
+category:"Nature",
+difficulty:"hard",
+q:"What is the largest mammal on Earth?",
+a:["Elephant","Blue Whale","Giraffe","Shark"],
+c:1
+}
+
+];
+
+
+/* ================= GAME VARIABLES ================= */
+
+let difficulty="easy";
+let gameQuestions=[];
+let current=0;
+
+let score=0;
+let winnings=0;
+
+let correct=0;
+let wrong=0;
+
+let streak=0;
+let bestStreak=0;
+
+let lives=3;
+
+let timer;
+let timeLeft=15;
+
+let answered=false;
+
+const QUESTION_PRIZE=500;
+
+
+/* ================= DIFFICULTY ================= */
+
+function selectDifficulty(level,button){
+
+    difficulty=level;
+
+    document.querySelectorAll(".diff")
+    .forEach(btn=>{
+        btn.classList.remove("active");
+    });
+
+    button.classList.add("active");
+}
+
+
+/* ================= START ================= */
+
+function startGame(){
+
+    current=0;
+    score=0;
+    winnings=0;
+    correct=0;
+    wrong=0;
+    streak=0;
+    bestStreak=0;
+    lives=3;
+    answered=false;
+
+    gameQuestions=questions
+    .filter(q=>q.difficulty===difficulty);
+
+    gameQuestions=shuffle(gameQuestions);
+
+    gameQuestions=gameQuestions.slice(0,10);
+
+    showScreen("gameScreen");
+
+    loadQuestion();
+}
+
+
+/* ================= LOAD QUESTION ================= */
+
+function loadQuestion(){
+
+    clearInterval(timer);
+
+    answered=false;
+
+    const q=gameQuestions[current];
+
+    document.getElementById("questionNumber")
+    .textContent=
+    `${current+1} / ${gameQuestions.length}`;
+
+    document.getElementById("category")
+    .textContent=q.category;
+
+    document.getElementById("difficultyText")
+    .textContent=difficulty.toUpperCase();
+
+    document.getElementById("question")
+    .textContent=q.q;
+
+    document.getElementById("feedback")
+    .textContent="";
+
+    document.getElementById("nextBtn")
+    .style.display="none";
+
+    const answers=document.getElementById("answers");
+
+    answers.innerHTML="";
+
+    q.a.forEach((answer,index)=>{
+
+        const button=document.createElement("button");
+
+        button.className="answer";
+
+        button.textContent=
+        `${String.fromCharCode(65+index)}. ${answer}`;
+
+        button.onclick=()=>{
+            chooseAnswer(index,button);
+        };
+
+        answers.appendChild(button);
+
+    });
+
+    document.getElementById("progress")
+    .style.width=
+    `${(current/gameQuestions.length)*100}%`;
+
+    updateStats();
+
+    startTimer();
+}
+
+
+/* ================= TIMER ================= */
+
+function startTimer(){
+
+    if(difficulty==="easy") timeLeft=15;
+    if(difficulty==="normal") timeLeft=12;
+    if(difficulty==="hard") timeLeft=9;
+
+    document.getElementById("timer")
+    .textContent=timeLeft;
+
+    timer=setInterval(()=>{
+
+        timeLeft--;
+
+        document.getElementById("timer")
+        .textContent=timeLeft;
+
+        if(timeLeft<=0){
+
+            clearInterval(timer);
+
+            timeoutQuestion();
+
+        }
+
+    },1000);
+}
+
+
+/* ================= TIMEOUT ================= */
+
+function timeoutQuestion(){
+
+    if(answered)return;
+
+    answered=true;
+
+    wrong++;
+    lives--;
+    streak=0;
+
+    revealAnswer(-1);
+
+    document.getElementById("feedback")
+    .textContent=
+    "⏰ Time's up! No Rs. 500 earned.";
+
+    document.getElementById("feedback")
+    .style.color="#ff7b8d";
+
+    updateStats();
+
+    checkEnd();
+}
+
+
+/* ================= ANSWER ================= */
+
+function chooseAnswer(index,button){
+
+    if(answered)return;
+
+    answered=true;
+
+    clearInterval(timer);
+
+    const q=gameQuestions[current];
+
+    document.querySelectorAll(".answer")
+    .forEach(btn=>{
+        btn.classList.add("disabled");
+    });
+
+    if(index===q.c){
+
+        button.classList.add("correct");
+
+        correct++;
+
+        streak++;
+
+        if(streak>bestStreak){
+            bestStreak=streak;
+        }
+
+        winnings+=QUESTION_PRIZE;
+
+        score+=
+        100+
+        timeLeft*5+
+        (streak-1)*25;
+
+        document.getElementById("feedback")
+        .textContent=
+        `🎉 Correct! +Rs. ${QUESTION_PRIZE}`;
+
+        document.getElementById("feedback")
+        .style.color="#39d98a";
+
+    }else{
+
+        button.classList.add("wrong");
+
+        wrong++;
+
+        lives--;
+
+        streak=0;
+
+        revealAnswer(index);
+
+        document.getElementById("feedback")
+        .textContent=
+        "❌ Wrong answer! No Rs. 500 earned.";
+
+        document.getElementById("feedback")
+        .style.color="#ff7b8d";
+    }
+
+    updateStats();
+
+    checkEnd();
+}
+
+
+/* ================= REVEAL ================= */
+
+function revealAnswer(selectedIndex){
+
+    const q=gameQuestions[current];
+
+    const buttons=
+    document.querySelectorAll(".answer");
+
+    buttons[q.c].classList.add("correct");
+
+    if(
+        selectedIndex>=0 &&
+        selectedIndex!==q.c
+    ){
+        buttons[selectedIndex]
+        .classList.add("wrong");
+    }
+}
+
+
+/* ================= END CHECK ================= */
+
+function checkEnd(){
+
+    document.getElementById("nextBtn")
+    .style.display="block";
+
+    if(lives<=0){
+
+        document.getElementById("nextBtn")
+        .textContent="SEE RESULTS 🏆";
+
+        document.getElementById("nextBtn")
+        .onclick=finishGame;
+
+        return;
+    }
+
+    if(current>=gameQuestions.length-1){
+
+        document.getElementById("nextBtn")
+        .textContent="SEE RESULTS 🏆";
+
+        document.getElementById("nextBtn")
+        .onclick=finishGame;
+    }
+}
+
+
+/* ================= NEXT ================= */
+
+function nextQuestion(){
+
+    if(lives<=0){
+        finishGame();
+        return;
+    }
+
+    if(current>=gameQuestions.length-1){
+        finishGame();
+        return;
+    }
+
+    current++;
+
+    loadQuestion();
+}
+
+
+/* ================= RESULT ================= */
+
+function finishGame(){
+
+    clearInterval(timer);
+
+    document.getElementById("correctResult")
+    .textContent=correct;
+
+    document.getElementById("wrongResult")
+    .textContent=wrong;
+
+    document.getElementById("scoreResult")
+    .textContent=score;
+
+    document.getElementById("streakResult")
+    .textContent=bestStreak;
+
+    document.getElementById("moneyResult")
+    .textContent=
+    `Rs. ${winnings.toLocaleString()}`;
+
+    let message;
+
+    if(winnings===5000){
+
+        message=
+        "🔥 Perfect! Maximum virtual winnings!";
+
+    }else if(winnings>=3500){
+
+        message=
+        "🌟 Excellent GK performance!";
+
+    }else if(winnings>=2000){
+
+        message=
+        "👏 Great job! Keep learning!";
+
+    }else{
+
+        message=
+        "📚 Good try! Play again and improve!";
+
+    }
+
+    document.getElementById("resultMessage")
+    .textContent=message;
+
+    showScreen("resultScreen");
+}
+
+
+/* ================= STATS ================= */
+
+function updateStats(){
+
+    document.getElementById("lives")
+    .textContent=lives;
+
+    document.getElementById("moneyDisplay")
+    .textContent=
+    `Rs. ${winnings.toLocaleString()}`;
+}
+
+
+/* ================= HOME ================= */
+
+function goHome(){
+
+    clearInterval(timer);
+
+    showScreen("homeScreen");
+}
+
+
+/* ================= SCREEN ================= */
+
+function showScreen(id){
+
+    document.querySelectorAll(".screen")
+    .forEach(screen=>{
+        screen.classList.remove("active");
+    });
+
+    document.getElementById(id)
+    .classList.add("active");
+}
+
+
+/* ================= SHUFFLE ================= */
+
+function shuffle(array){
+
+    return [...array].sort(
+        ()=>Math.random()-.5
+    );
+}
+
+</script>
+
+</body>
+</html>
